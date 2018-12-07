@@ -2,6 +2,8 @@
 为了保证`ethercat主站`实时性，我们需要重新编译实时内核。按照igh的官网说明，如果没有使用官方实现的驱动的网卡，可以不使用实时内核。在这里我们使用`realtek 8168b`网卡（8168b网卡在开源驱动型号变为了8169）。然后使用`xenomai`作为实时内核的实现。
 ## linux
 我们使用linux作为`ethercat`主站的实现。在这里我们使用32位的`ubuntu 14.04`（内核版本为 3.13.* ）。然后编译的内核版本为`3.14.44`。[下载地址](https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.14.44.tar.xz)
+
+ubuntu14刚开始安装的时候默认内核是4.0+的，这里需要把内核更换一下，我更换的内核是3.12版本，经过测试，在比较新的电脑上可能存在开不了机的情况，驱动不兼容
 ## xenomai
 `xenomai`作为一个linux的实时固件，它的原理是重写了linux系统的中断处理函数，从而自己变为了一个简单的实时系统内核，而linux本身变为了它的一个优先级较低的task，从而保证其他实时task的处理，在`ethercat主站`中我们使用`xenomai2`，目前它最新版本为2.6.5。[下载地址](http://xenomai.org/downloads/xenomai/stable/xenomai-2.6.5.tar.bz2)
 
@@ -20,6 +22,7 @@ cd linux-3.14.44
 ## 配置内核
 ```
 make xconfig
+如果xconfig使用不了需要sudo apt-get install libqt4-dev一下
 ```
 推荐配置如下
 ```
